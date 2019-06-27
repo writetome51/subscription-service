@@ -1,0 +1,29 @@
+{
+  "name": "@writetome51/subscription-service",
+  "version": "0.0.1",
+  "description": "A Typescript/Javascript class ",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/writetome51/subscription-service.git"
+  },
+  "keywords": [
+    "subscription",
+    "typescript",
+    "class"
+  ],
+  "author": "Steve Thompson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/writetome51/subscription-service/issues"
+  },
+  "homepage": "https://github.com/writetome51/subscription-service#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "rxjs": "^6.1.0"
+  }
+}
