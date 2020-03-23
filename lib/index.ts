@@ -1,17 +1,13 @@
-import { Subscription } from 'rxjs';
+import { Subscribable, Unsubscribable } from 'rxjs';
 
 
-export class SubscriptionService {
+export abstract class SubscriptionService implements Unsubscribable {
 
 	private __data: any;
-	private __subscription: Subscription; // the subscription to this.data
+	private __subscription: Unsubscribable; // the subscription to this.data
 
 
-	constructor(
-		private __observable: {
-			subscribe: (dataHandler: (data) => void) => Subscription
-		}
-	) {
+	constructor(private __subscribable: Subscribable<any>) {
 		this.__set__subscription();
 	}
 
@@ -26,10 +22,15 @@ export class SubscriptionService {
 	}
 
 
-	private async __set__subscription() {
+	// Manipulates observable data and must return the result
 
-		this.__subscription = await this.__observable.subscribe((data) => {
-			this.__data = data;
+	protected abstract _dataHandler(data): any
+
+
+	private __set__subscription() {
+
+		this.__subscription = this.__subscribable.subscribe((data) => {
+			this.__data = this._dataHandler(data);
 		});
 	}
 

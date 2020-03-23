@@ -1,24 +1,25 @@
-import { Subscription } from 'rxjs';
+import { Subscribable } from 'rxjs';
 
 
-export declare class SubscriptionService {
+export declare abstract class SubscriptionService {
 
-	readonly data: any;
-
-	private __observable;
+	private __subscribable;
 	private __data;
 	private __subscription;
 
 
-	constructor(
-		__observable: {
-			subscribe: (dataHandler: (data: any) => void) => Subscription;
-		}
-	);
+	constructor(__subscribable: Subscribable<any>);
+
+
+	get data(): any;
 
 
 	unsubscribe(): void;
 
 
+	protected abstract _dataHandler(data: any): any;
+
+
 	private __set__subscription;
+
 }
