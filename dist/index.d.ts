@@ -1,7 +1,7 @@
 import { Subscribable, Unsubscribable } from 'rxjs';
 
 
-export declare abstract class SubscriptionService implements Unsubscribable {
+export declare class SubscriptionService implements Unsubscribable {
 
 	private __subscribable;
 	private __data;
@@ -17,7 +17,7 @@ export declare abstract class SubscriptionService implements Unsubscribable {
 	unsubscribe(): void;
 
 
-	protected abstract _dataHandler(data: any): any;
+	protected _dataHandler(data: any): any;
 
 
 	private __set__subscription;

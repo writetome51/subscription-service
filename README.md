@@ -1,9 +1,11 @@
 # SubscriptionService
 
-An abstract TypeScript/JavaScript class that represents a Subscription to any kind of data.  
-When a Subscribable is passed to the constructor, the Subscription is created, and the  
-`data` property is assigned the observable data.  
-You call `unsubscribe()` on the class instance when you need to.
+A TypeScript/JavaScript class that represents a [Subscription](https://rxjs-dev.firebaseapp.com/guide/subscription).  
+When a [Subscribable](https://rxjs-dev.firebaseapp.com/api/index/interface/Subscribable) is passed
+ to the constructor, the Subscription is created  
+ and the observable data is passed to `_dataHandler()`.  
+ `_dataHandler()` returns a result that is available in the `data` property. You call  
+ `unsubscribe()` on the class instance when you need to.
 
 
 ## Example
@@ -32,9 +34,10 @@ data: any // read-only
 ```ts
 unsubscribe(): void
 
-protected abstract _dataHandler(data): any
-    // Implement in a subclass.
-    // Manipulates observable data and must return the result.
+protected  _dataHandler(data): any
+    // Can be used as-is, but gives opportunity for further manipulation 
+    // of observable data if overridden.
+    // Must return result, which will be available in this.data
 ```
 
 

@@ -1,10 +1,10 @@
 import { Subscribable, Unsubscribable } from 'rxjs';
 
 
-export abstract class SubscriptionService implements Unsubscribable {
+export class SubscriptionService implements Unsubscribable {
 
 	private __data: any;
-	private __subscription: Unsubscribable; // the subscription to this.data
+	private __subscription: Unsubscribable;
 
 
 	constructor(private __subscribable: Subscribable<any>) {
@@ -22,9 +22,12 @@ export abstract class SubscriptionService implements Unsubscribable {
 	}
 
 
-	// Manipulates observable data and must return the result
+	// Can be used as-is, but gives opportunity for further manipulation if overridden.
+	// Must return result, which will be available in this.data
 
-	protected abstract _dataHandler(data): any
+	protected _dataHandler(data) {
+		return data;
+	}
 
 
 	private __set__subscription() {
