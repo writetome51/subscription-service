@@ -1,19 +1,17 @@
 import { Subscribable, Unsubscribable } from 'rxjs';
 
 
-export class SubscriptionService implements Unsubscribable {
+export abstract class SubscriptionService implements Unsubscribable {
 
-	private __data: any;
 	private __subscription: Unsubscribable;
 
 
 	constructor(private __subscribable: Subscribable<any>) {
-		this.__set__subscription();
 	}
 
 
-	get data(): any {
-		return this.__data;
+	set(): void {
+		this.__subscription = this.__subscribable.subscribe(this._dataHandler);
 	}
 
 
@@ -22,19 +20,12 @@ export class SubscriptionService implements Unsubscribable {
 	}
 
 
-	// Can be used as-is, but gives opportunity for further manipulation if overridden.
-	// Must return result, which will be available in this.data
+	// This is not declared as abstract because it's possible it will have to be defined in a
+	// subclass' constructor.  If that is the case, and this is declared abstract, Typescript
+	// will give an error saying the subclass incorrectly extends this class.
 
-	protected _dataHandler(data) {
-		return data;
-	}
-
-
-	private __set__subscription() {
-
-		this.__subscription = this.__subscribable.subscribe((data) => {
-			this.__data = this._dataHandler(data);
-		});
+	protected _dataHandler(data): void {
+		throw new Error(`The method '_dataHandler()' has not been implemented`);
 	}
 
 

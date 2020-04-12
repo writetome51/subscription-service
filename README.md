@@ -4,8 +4,7 @@ A TypeScript/JavaScript class that represents a [Subscription](https://rxjs-dev.
 When a [Subscribable](https://rxjs-dev.firebaseapp.com/api/index/interface/Subscribable) is passed
  to the constructor, the Subscription is created  
  and the observable data is passed to `_dataHandler()`.  
- `_dataHandler()` returns a result that is available in the `data` property. You call  
- `unsubscribe()` on the class instance when you need to.
+ You call `unsubscribe()` on the class instance when you need to.
 
 
 ## Example
@@ -24,20 +23,19 @@ usersSubscription.unsubscribe();
 constructor(__subscribable: Subscribable<any>)
 ```
 
-## Properties
-```ts
-data: any // read-only
-```
-
 ## Methods
 
 ```ts
+set(): void
+    // Calls .subscribe() on `__subscribable` passed to the constructor.
+    // The subscription is saved in the instance.
+
 unsubscribe(): void
 
-protected  _dataHandler(data): any
-    // Can be used as-is, but gives opportunity for further manipulation 
-    // of observable data if overridden.
-    // Must return result, which will be available in this.data
+protected  _dataHandler(data): void
+    // Must be implemented in a subclass.
+    // This is the handler called whenever there is an update
+    // to the data subscribed to.
 ```
 
 
