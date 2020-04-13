@@ -1,17 +1,30 @@
 # SubscriptionService
 
-A TypeScript/JavaScript class that represents a [Subscription](https://rxjs-dev.firebaseapp.com/guide/subscription).  
-When a [Subscribable](https://rxjs-dev.firebaseapp.com/api/index/interface/Subscribable) is passed
- to the constructor, the Subscription is created  
- and the observable data is passed to `_dataHandler()`.  
- You call `unsubscribe()` on the class instance when you need to.
+An abstract TypeScript/JavaScript class that represents a [Subscription](https://rxjs-dev.firebaseapp.com/guide/subscription).  
+A [Subscribable](https://rxjs-dev.firebaseapp.com/api/index/interface/Subscribable) must be passed
+ to the constructor.
+ But the subscription is not created until `.set()` is called on the instance.
+ Every time the observable data is updated, it's passed to `._dataHandler()`.  
+ You call `.unsubscribe()` on the instance when you need to.
 
 
 ## Example
 ```ts
-const usersSubscription = new SubscriptionService(usersSubscribable);
+class UsersSubscriptionService extends SubscriptionService {
 
-console.log(usersSubscription.data); // logs users to console.
+    constructor(__usersSubscribable) {
+        super(__usersSubscribable);
+
+        this._dataHandler = (data: Users) => {
+            // log users to console:
+            console.log(data);
+        };
+    }
+
+}
+
+const usersSubscription = new UsersSubscriptionService(usersSubscribable);
+usersSubscription.set();
 
 // later on...
 usersSubscription.unsubscribe();
